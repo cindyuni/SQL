@@ -4,11 +4,10 @@ Practice your SQL skills with real healthcare data—think patients, admissions,
 
 
 ### 📚 Topics Covered
-- [Filtering and conditional queries](#-filtering-and-conditional-queries)
-- [Aggregations and grouping](#-aggregations-and-grouping)
-- Joins across multiple tables  
+- Filtering and conditional queries
+- Aggregations and grouping
 - Window functions and ranking  
-- Subqueries and CTEs  
+- Joins and Subqueries
 - Data cleaning and formatting  
 
 ## 📍 Filtering and conditional queries  
@@ -46,6 +45,31 @@ SELECT
     END AS isObese
 FROM patients;
 ````
+
+
+**❓ We are looking for a specific patient. Pull all columns for the patient who matches the following criteria: - First_name contains an 'r' after the first two letters.**
+1. Identifies their gender as 'F'
+2. Born in February, May, or December
+3. Their weight would be between 60kg and 80kg
+4. Their patient_id is an odd number
+5. They are from the city 'Kingston'
+
+- Filter conditions include:
+  - `first_name` starts with any two characters followed by `'r'` → `LIKE '__r%'`
+  - Birth month is February, May, or December → `MONTH(birth_date) IN (2, 5, 12)`
+  - Patient ID is odd → `patient_id % 2 != 0`
+
+````sql
+SELECT *
+FROM patients
+WHERE first_name LIKE ('__r%')
+  AND gender = 'F'
+  AND MONTH(birth_date) IN (2, 5, 12)
+  AND weight BETWEEN 60 AND 80
+  AND patient_id % 2 != 0
+  AND city = 'Kingston';
+````
+
 
 ## 📍 Aggregations and grouping
 
@@ -119,4 +143,72 @@ SELECT COUNT(DISTINCT patient_id) AS patients_in_group,
 FROM patients
 GROUP BY weight_group
 ORDER BY weight_group DESC;
+````
+
+
+## 📍 Joins and Subqueries
+
+**❓ We need a breakdown for the total amount of admissions each doctor has started each year. Show the doctor_id, doctor_full_name, specialty, year, total_admissions for that year.**
+
+
+- Count total admissions per doctor per year  
+  - Use `GROUP BY` on `attending_doctor_id` and `YEAR(admission_date)`  
+- Format doctor information  
+  - Combine `first_name` and `last_name` using `CONCAT()`  
+  - Include `specialty` from the `doctors` table  
+
+````sql
+SELECT doc.*,
+       ad.selected_year,
+       ad.total_admissions
+FROM
+(
+  SELECT attending_doctor_id,
+         YEAR(admission_date) AS selected_year,
+         COUNT(*) AS total_admissions
+  FROM admissions
+  GROUP BY selected_year, attending_doctor_id
+) ad
+JOIN
+(
+  SELECT doctor_id,
+         CONCAT(first_name, ' ', last_name) AS doctor_name,
+         specialty
+  FROM doctors
+) doc
+ON ad.attending_doctor_id = doc.doctor_id;
+````
+
+**❓ Show the provinces that has more patients identified as 'M' than 'F'. Must only show full province_name.**
+
+````sql
+SELECT pro.province_name
+FROM
+(
+  SELECT province_id,
+         SUM(CASE WHEN gender = 'F' THEN 1 ELSE 0 END) AS f_count,
+         SUM(CASE WHEN gender = 'M' THEN 1 ELSE 0 END) AS m_count
+  FROM patients
+  GROUP BY province_id
+  HAVING m_count > f_count
+) pat
+LEFT JOIN province_names pro
+  ON pat.province_id = pro.province_id;
+````
+
+
+## 📍 Data cleaning and formatting
+
+**❓ Sort the province names in ascending order in such a way that the province 'Ontario' is always on top.**
+
+- Sort with a custom rule:
+  - If `province_name` is `'Ontario'`, rank it first (assign 0)
+  - All other provinces get ranked after (assign 1)
+
+````sql
+SELECT province_name
+FROM province_names
+ORDER BY 
+  CASE WHEN province_name = 'Ontario' THEN 0 ELSE 1 END,
+  province_name;
 ````
