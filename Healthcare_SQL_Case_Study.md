@@ -196,6 +196,41 @@ LEFT JOIN province_names pro
   ON pat.province_id = pro.province_id;
 ````
 
+**❓ All patients who have gone through admissions, can see their medical documents on our site. Those patients are given a temporary password after their first admission. Show the patient_id and temp_password.**
+
+The password must be the following, in order:
+1. patient_id
+2. the numerical length of patient's last_name
+3. year of patient's birth_date
+
+````sql
+SELECT 
+    patient_id, 
+    CONCAT(patient_id, LEN(last_name), YEAR(birth_date)) AS temp_password
+FROM 
+    patients
+WHERE 
+    patient_id IN (SELECT patient_id FROM admissions);
+````
+
+**❓ Show patient_id, first_name, last_name, and attending doctor's specialty.
+Show only the patients who has a diagnosis as 'Epilepsy' and the doctor's first name is 'Lisa'
+Check patients, admissions, and doctors tables for required information.**
+
+````sql
+SELECT
+  p.patient_id,
+  p.first_name AS patient_first_name,
+  p.last_name AS patient_last_name,
+  ph.specialty AS attending_doctor_specialty
+FROM patients p
+  JOIN admissions a ON a.patient_id = p.patient_id
+  JOIN doctors ph ON ph.doctor_id = a.attending_doctor_id
+WHERE
+  ph.first_name = 'Lisa' and
+  a.diagnosis = 'Epilepsy';
+````
+
 
 ## 📍 Data cleaning and formatting
 
@@ -211,4 +246,25 @@ FROM province_names
 ORDER BY 
   CASE WHEN province_name = 'Ontario' THEN 0 ELSE 1 END,
   province_name;
+````
+
+**❓ Display patient's full name,
+height in the units feet rounded to 1 decimal,
+weight in the unit pounds rounded to 0 decimals,
+birth_date,
+gender non abbreviated.**
+
+````sql
+SELECT 
+    CONCAT(first_name, ' ', last_name) AS patient_name,
+    ROUND(height / 30.48, 1) AS height,
+    ROUND(weight * 2.205) AS weight,
+    birth_date,
+    CASE 
+        WHEN gender = 'M' THEN 'MALE'
+        WHEN gender = 'F' THEN 'FEMALE'
+        ELSE gender
+    END AS gender_type
+FROM patients;
+
 ````
