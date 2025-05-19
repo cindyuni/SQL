@@ -145,6 +145,30 @@ GROUP BY weight_group
 ORDER BY weight_group DESC;
 ````
 
+**❓ Which patients have a cumulative weight (ordered by patient ID) that is still below 1000 kg?**
+
+
+- Use a Common Table Expression (CTE) `rolling_sum_table` to create a temporary result set.
+- Within the CTE:
+  - Calculate a rolling sum of `weight` using `SUM(weight) OVER (ORDER BY patient_id)`.
+- In the main query:
+  - Filter to include only rows where the cumulative `rolling_sum` is less than 1000.
+  
+````sql
+with rolling_sum_table as (
+    select
+      patient_id,
+      first_name,
+      weight,
+      sum(weight) over(order by patient_id) as rolling_sum
+    from patients
+  )
+
+SELECT *
+from rolling_sum_table
+where rolling_sum < 1000
+````
+
 
 ## 📍 Joins and Subqueries
 
