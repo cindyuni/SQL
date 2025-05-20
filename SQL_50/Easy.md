@@ -51,6 +51,20 @@ OR population >=  25000000;
 ⚡ This solution beats **60%** of other submissions' runtime.
 
 ---
+#### [1068. Product Sales Analysis I](https://leetcode.com/problems/product-sales-analysis-i/description/?envType=study-plan-v2&envId=top-sql-50)
+ 
+Write a solution to report the product_name, year, and price for each sale_id in the Sales table.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT P.product_name, S.year, S.price
+FROM Sales S JOIN Product P
+ON S.product_id = P.product_id;
+```
+⚡ This solution beats **98.41%** of other submissions' runtime.
+
+---
 
 #### [1148. Article Views I](https://leetcode.com/problems/article-views-i/description/?envType=study-plan-v2&envId=top-sql-50)
 Write a solution to find all the authors that viewed at least one of their own articles.
@@ -68,6 +82,52 @@ ORDER BY id;
 
 ---
 
+#### [1378. Replace Employee ID With The Unique Identifier](https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/description/?envType=study-plan-v2&envId=top-sql-50)
+Write a solution to show the unique ID of each user, If a user does not have a **unique ID** replace just show `null`.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT EU.unique_id, E.NAME
+FROM Employees E
+LEFT JOIN EmployeeUNI EU
+ON E.id = EU.id;
+````
+⚡ This solution beats **88%** of other submissions' runtime.
+
+---
+
+#### [1581. Customer Who Visited but Did Not Make Any Transactions](https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/description/?envType=study-plan-v2&envId=top-sql-50)
+Write a solution to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.
+
+
+#### 💡 SQL Solution
+
+```sql
+select v.customer_id, count(*) as count_no_trans
+from Visits v
+left join Transactions t
+on v.visit_id = t.visit_id
+WHERE t.transaction_id is null
+GROUP BY v.customer_id;
+````
+⚡ This solution beats **93.38%** of other submissions' runtime.
+
+---
+
+#### [1683. Invalid Tweets](https://leetcode.com/problems/invalid-tweets/description/?envType=study-plan-v2&envId=top-sql-50)
+Write a solution to find the IDs of the invalid tweets. The tweet is invalid if the number of characters used in the content of the tweet is **strictly greater** than `15`.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT tweet_id
+FROM Tweets
+WHERE LEN(content) > 15;
+````
+⚡ This solution beats **64%** of other submissions' runtime.
+
+---
 #### [1757. Recyclable and Low Fat Products](https://leetcode.com/problems/recyclable-and-low-fat-products/solutions/?envType=study-plan-v2&envId=top-sql-50)
 Write a solution to find the IDs of products that are **both** low fat and recyclable.
 
