@@ -13,7 +13,7 @@ WHERE id in (
     GROUP BY e.managerID
     HAVING count(e.id) >= 5);
 ```
-⚡ This solution beats **77.73%%** of other submissions' runtime.
+⚡ This solution beats **77.73%** of other submissions' runtime.
 
 ---
 
@@ -33,6 +33,6 @@ LEFT JOIN Confirmations C
 ON S.user_id = C.user_id
 GROUP BY S.user_id;
 ```
-⚡ This solution beats **98.95%%** of other submissions' runtime.
+⚡ This solution beats **98.95%** of other submissions' runtime.
 
 ---
