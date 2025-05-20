@@ -1,15 +1,19 @@
-# 🧠 LeetCode SQL Practice
+# 🧠 LeetCode SQL Practice - SQL 50
 
 This repository records my ongoing practice of SQL problems from [LeetCode - SQL 50]([https://leetcode.com/problemset/database/](https://leetcode.com/studyplan/top-sql-50/)).  
 The goal is to strengthen my SQL skills through real-world-style challenges involving filtering, joining, aggregation, and advanced querying.
 
----
+
 
 ## 📁 Folder Structure
 
-
-
----
+<pre lang="markdown"><code> 
+SQL_50/
+├── Easy/ # Solutions for easy problems
+├── Medium/ # Solutions for medium-level problems
+├── Hard/ # Solutions for hard problems
+└── README.md
+</code></pre>
 
 ## 🗂️ Problem Progress
 
@@ -21,7 +25,6 @@ The goal is to strengthen my SQL skills through real-world-style challenges invo
 
 > ✅ Completed　🔄 In Progress　⏳ Not Started
 
----
 
 ## 📌 Focus Areas
 
@@ -32,7 +35,6 @@ The goal is to strengthen my SQL skills through real-world-style challenges invo
 - Window functions: `ROW_NUMBER()`, `RANK()`, etc.
 - Schema normalization and case formatting.
 
----
 
 ## 📝 Notes
 
