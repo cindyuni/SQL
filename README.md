@@ -9,9 +9,7 @@ This repository contains my personal SQL practice, organized by case studies. Ea
 <pre lang="markdown"><code> 
   sql-case-studies/ 
   ├── Healthcare_SQL_Case_Study/ # SQL exercises based on hospital/patient data 
-  ├── ecommerce_case/ # Exercises using e-commerce sales data 
-  ├── employee_case/ # HR or company staff-related queries 
-  ├── mock_competition_case/ # Inspired by coding competitions or interviews 
+  ├── SQL 50/ # Crack SQL Interview in 50 Qs
   └── README.md  </code></pre>
 ---
 
@@ -20,9 +18,7 @@ This repository contains my personal SQL practice, organized by case studies. Ea
 | Case Folder         | Description                            | Status        |
 |---------------------|----------------------------------------|---------------|
 | `Healthcare_SQL_Case_Study`     | Patient/admission dataset from a clinic | ✅ Done   |
-| `ecommerce_case`    | Online store orders and customers       | ⏳ Not Started |
-| `employee_case`     | Staff roles, salaries, performance data |  🔄 In Progress |
-| `mock_competition_case` | Simulated interview-style questions | ⏳ Not Started |
+| `SQL 50`    | Online store orders and customers       | 🔄 In Progress |
 
 ---
 
@@ -38,16 +34,12 @@ This repository contains my personal SQL practice, organized by case studies. Ea
 
 ## 🧩 Useful Resources
 
-- [SQLBolt](https://sqlbolt.com)  
+- [Learn SQL - Online SQL Terminal - Practice SQL Querys](https://www.sql-practice.com)
 - [LeetCode SQL Problems](https://leetcode.com/problemset/database/)  
+- [SQLBolt](https://sqlbolt.com)  
 - [Mode SQL Tutorial](https://mode.com/sql-tutorial/)  
 - [DB Fiddle](https://www.db-fiddle.com/) - quick online SQL tests  
-- [Learn SQL - Online SQL Terminal - Practice SQL Querys](https://www.sql-practice.com)
----
 
-## 🗂️ To-Do
-
-- [ ] Try the same problem using different SQL dialects  
 
 ---
 
