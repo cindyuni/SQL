@@ -18,6 +18,22 @@ AND DATEDIFF(DAY, prev_date, recordDate) = 1;
 ⚡ This solution beats **80%** of other submissions' runtime.
 
 ---
+#### [577. Employee Bonus](https://leetcode.com/problems/employee-bonus/description/?envType=study-plan-v2&envId=top-sql-50)
+
+Write a solution to report the name and bonus amount of each employee with a bonus **less than** `1000`.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT E.name, B.bonus
+FROM Employee E
+LEFT JOIN Bonus B
+ON E.empId = B.empId
+WHERE B.bonus < 1000 OR B.bonus is NULL;
+```
+⚡ This solution beats **65%** of other submissions' runtime.
+
+---
 #### [584. Find Customer Referee](https://leetcode.com/problems/find-customer-referee/description/?envType=study-plan-v2&envId=top-sql-50)
 Find the names of the customer that are not referred by the customer with `id = 2`.
 
@@ -82,6 +98,23 @@ ORDER BY id;
 
 ---
 
+#### [1280. Students and Examinations](https://leetcode.com/problems/students-and-examinations/?envType=study-plan-v2&envId=top-sql-50)
+
+Write a solution to find the number of times each student attended each exam.
+Return the result table ordered by student_id and subject_name.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT DISTINCT(author_id) AS id 
+FROM Views 
+WHERE author_id = viewer_id 
+ORDER BY id;
+````
+⚡ This solution beats **55%** of other submissions' runtime.
+
+---
+
 #### [1378. Replace Employee ID With The Unique Identifier](https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/description/?envType=study-plan-v2&envId=top-sql-50)
 Write a solution to show the unique ID of each user, If a user does not have a **unique ID** replace just show `null`.
 
@@ -112,6 +145,27 @@ WHERE t.transaction_id is null
 GROUP BY v.customer_id;
 ````
 ⚡ This solution beats **93.38%** of other submissions' runtime.
+
+---
+
+#### [1661. Average Time of Process per Machine](https://leetcode.com/problems/average-time-of-process-per-machine/description/?envType=study-plan-v2&envId=top-sql-50)
+There is a factory website that has several machines each running the same number of processes. Write a solution to find the average time each machine takes to complete a process.
+
+The time to complete a process is the `'end' timestamp` minus the `'start' timestamp`. The average time is calculated by the total time to complete every process on the machine divided by the number of processes that were run.
+
+The resulting table should have the `machine_id` along with the **average time** as `processing_time`, which should be **rounded to 3 decimal places**.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT a1.machine_id,  round(avg(a2.timestamp - a1.timestamp), 3) as processing_time
+FROM Activity a1
+JOIN Activity a2
+ON a1.machine_id = a2.machine_id and a1.process_id = a2.process_id
+WHERE a1.activity_type = 'start' and a2.activity_type = 'end' 
+GROUP BY a1.machine_id;
+````
+⚡ This solution beats **76.97%** of other submissions' runtime.
 
 ---
 
