@@ -1,13 +1,13 @@
-# 🧠 SQL Case Study Practice
+# 🧠 SQL Practice
 
-This repository contains my personal SQL practice, organized by case studies. Each folder represents a different dataset, problem domain, or project-style challenge. The goal is to practice SQL in realistic scenarios and improve my data querying, cleaning, and analysis skills.
+This repository contains my personal SQL practice. Each folder represents a different dataset, problem domain, or project-style challenge. The goal is to practice SQL in realistic scenarios and improve my data querying, cleaning, and analysis skills.
 
 ---
 
 ## 📁 Folder Structure
 
 <pre lang="markdown"><code> 
-  sql-case-studies/ 
+  sql-practice/ 
   ├── Healthcare_SQL_Case_Study/ # SQL exercises based on hospital/patient data 
   ├── SQL 50/ # Crack SQL Interview in 50 Qs
   └── README.md  </code></pre>
