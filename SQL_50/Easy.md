@@ -18,6 +18,24 @@ AND DATEDIFF(DAY, prev_date, recordDate) = 1;
 ⚡ This solution beats **80%** of other submissions' runtime.
 
 ---
+
+#### [550. Game Play Analysis IV](https://leetcode.com/problems/game-play-analysis-iv/description/?envType=study-plan-v2&envId=top-sql-50)
+Write a solution to report the **fraction** of players that logged in again on the day after the day they first logged in, **rounded to 2 decimal** places. In other words, you need to count the number of players that logged in for at least two consecutive days starting from their first login date, then divide that number by the total number of players.
+
+#### 💡 SQL Solution
+
+```sql
+WITH CTE AS(
+    SELECT *, MIN(event_date) OVER (PARTITION BY player_id) AS first_login_date
+    FROM Activity
+    )
+
+SELECT ROUND(SUM(CASE WHEN event_date = DATEADD(day, 1, first_login_date) THEN 1 ELSE 0 END)*1.0 / COUNT(DISTINCT player_id), 2) as fraction
+FROM CTE;
+```
+⚡ This solution beats **99.29%** of other submissions' runtime.
+
+---
 #### [577. Employee Bonus](https://leetcode.com/problems/employee-bonus/description/?envType=study-plan-v2&envId=top-sql-50)
 
 Write a solution to report the name and bonus amount of each employee with a bonus **less than** `1000`.
@@ -67,6 +85,23 @@ OR population >=  25000000;
 ⚡ This solution beats **60%** of other submissions' runtime.
 
 ---
+
+#### [596. Classes More Than 5 Students](https://leetcode.com/problems/classes-more-than-5-students/description/?envType=study-plan-v2&envId=top-sql-50)
+ 
+Write a solution to find all the classes that have **at least five students**.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT class
+FROM Courses
+GROUP BY class
+HAVING COUNT(DISTINCT student) >= 5;
+```
+⚡ This solution beats **77.36%** of other submissions' runtime.
+
+---
+
 #### [620. Not Boring Movies](https://leetcode.com/problems/not-boring-movies/description/?envType=study-plan-v2&envId=top-sql-50)
  
 Write a solution to report the movies with an **odd-numbered ID** and a **description that is not "boring"**.
@@ -100,6 +135,26 @@ ON S.product_id = P.product_id;
 
 ---
 
+#### [1070. Product Sales Analysis III](https://leetcode.com/problems/product-sales-analysis-iii/description/?envType=study-plan-v2&envId=top-sql-50)
+ 
+Write a solution to select the **product id, year, quantity, and price** for the **first year** of every product sold. If any product is bought multiple times in its first year, return all sales separately.
+
+#### 💡 SQL Solution
+
+```sql
+WITH CTE AS (
+    SELECT *, MIN(year) OVER (PARTITION BY product_id) AS first_year
+    FROM Sales
+)
+
+SELECT product_id, first_year, quantity, price
+FROM CTE 
+WHERE year = first_year;
+```
+⚡ This solution beats **87.87%** of other submissions' runtime.
+
+---
+
 #### [1075. Project Employees I](https://leetcode.com/problems/project-employees-i/description/?envType=study-plan-v2&envId=top-sql-50)
  
 Write an SQL query that reports the **average** experience years of all the employees for each project, **rounded to 2 digits**.
@@ -114,6 +169,22 @@ ON P.employee_id = E.employee_id
 GROUP BY project_id
 ```
 ⚡ This solution beats **82.45%** of other submissions' runtime.
+
+---
+
+#### [1141. User Activity for the Past 30 Days I](https://leetcode.com/problems/project-employees-i/description/?envType=study-plan-v2&envId=top-sql-50)
+ 
+Write a solution to find the daily active user count for a period of `30 days` ending `2019-07-27` inclusively. A user was active on someday if they made at least one activity on that day.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT activity_date AS day, COUNT(DISTINCT user_id) AS active_users
+FROM Activity
+WHERE activity_date BETWEEN DATEADD(day, -29, CAST('2019-07-27' AS DATE)) and CAST('2019-07-27' AS DATE)
+GROUP BY activity_date;
+```
+⚡ This solution beats **83.5%** of other submissions' runtime.
 
 ---
 
@@ -133,6 +204,70 @@ ORDER BY id;
 
 ---
 
+#### [1174. Immediate Food Delivery II](https://leetcode.com/problems/immediate-food-delivery-ii/description/?envType=study-plan-v2&envId=top-sql-50)
+If the customer's preferred delivery date is the same as the order date, then the order is called **immediate**; otherwise, it is called **scheduled**.
+
+The **first order** of a customer is the order with the earliest order date that the customer made. It is guaranteed that a customer has precisely one first order.
+
+Write a solution to find the percentage of immediate orders in the first orders of all customers, rounded to **2 decimal places**.
+
+#### 💡 SQL Solution
+
+```sql
+WITH CTE AS (
+    SELECT *,
+        MIN(order_date) OVER (PARTITION BY customer_id) AS first_order_date
+    FROM Delivery
+)
+SELECT 
+    ROUND(
+        SUM(CASE 
+            WHEN order_date = first_order_date 
+                 AND order_date = customer_pref_delivery_date
+            THEN 1 ELSE 0 END) * 100.0 / COUNT(DISTINCT customer_id), 2
+    ) AS immediate_percentage
+FROM CTE;
+````
+⚡ This solution beats **89.72%** of other submissions' runtime.
+
+---
+
+#### [1193. Monthly Transactions I](https://leetcode.com/problems/monthly-transactions-i/description/?envType=study-plan-v2&envId=top-sql-50)
+Write an SQL query to find for each month and country, the number of transactions and their total amount, the number of approved transactions and their total amount.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT FORMAT(trans_date, 'yyyy-MM') as month, 
+       country, 
+       COUNT(id) as trans_count, 
+       SUM(case when state='approved' then 1 else 0 end) as approved_count, 
+       SUM(amount) as trans_total_amount,  
+       SUM(case when state='approved' then amount else 0 end) as approved_total_amount
+FROM Transactions
+GROUP BY FORMAT(trans_date, 'yyyy-MM'), country;
+````
+⚡ This solution beats **72.97%** of other submissions' runtime.
+
+---
+#### [1211. Queries Quality and Percentage](https://leetcode.com/problems/queries-quality-and-percentage/description/?envType=study-plan-v2&envId=top-sql-50)
+We define query `quality` as: The average of the ratio between query rating and its position.
+
+We also define `poor query percentage` as: The percentage of all queries with rating `less than 3`.
+
+Write a solution to find each query_name, the quality and poor_query_percentage.
+Both quality and poor_query_percentage should be rounded to **2 decimal places**.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT query_name, ROUND(AVG(rating*1.0/position), 2) AS quality, ROUND(SUM(CASE WHEN rating < 3 THEN 1 ELSE 0 END)*100.0/count(*), 2) AS poor_query_percentage
+FROM Queries
+GROUP BY query_name
+````
+⚡ This solution beats **83.02%** of other submissions' runtime.
+
+---
 #### [1251. Average Selling Price](https://leetcode.com/problems/average-selling-price/description/?envType=study-plan-v2&envId=top-sql-50)
 Write a solution to find the average selling price for each product. average_price should be **rounded to 2 decimal places**. If a product does not have any sold units, its average selling price is assumed to be 0.
 
@@ -268,3 +403,16 @@ FROM Products
 WHERE low_fats = 'Y' AND recyclable = 'Y';
 ````
 ⚡ This solution beats **79%** of other submissions' runtime.
+
+---
+#### [2356. Number of Unique Subjects Taught by Each Teacher](https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher/description/?envType=study-plan-v2&envId=top-sql-50)
+Write a solution to calculate the number of unique subjects each teacher teaches in the university.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT teacher_id, COUNT(DISTINCT subject_id) AS cnt
+FROM Teacher
+GROUP BY teacher_id;
+````
+⚡ This solution beats **92%** of other submissions' runtime.
