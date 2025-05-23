@@ -100,6 +100,23 @@ ON S.product_id = P.product_id;
 
 ---
 
+#### [1075. Project Employees I](https://leetcode.com/problems/project-employees-i/description/?envType=study-plan-v2&envId=top-sql-50)
+ 
+Write an SQL query that reports the **average** experience years of all the employees for each project, **rounded to 2 digits**.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT P.project_id, ROUND(AVG(E.experience_years*1.0), 2) as average_years
+FROM Project P
+JOIN Employee E
+ON P.employee_id = E.employee_id
+GROUP BY project_id
+```
+⚡ This solution beats **82.45%** of other submissions' runtime.
+
+---
+
 #### [1148. Article Views I](https://leetcode.com/problems/article-views-i/description/?envType=study-plan-v2&envId=top-sql-50)
 Write a solution to find all the authors that viewed at least one of their own articles.
 Return the result table sorted by id in ascending order.
@@ -185,6 +202,24 @@ WHERE t.transaction_id is null
 GROUP BY v.customer_id;
 ````
 ⚡ This solution beats **93.38%** of other submissions' runtime.
+
+---
+#### [1633. Percentage of Users Attended a Contest](https://leetcode.com/problems/percentage-of-users-attended-a-contest/description/?envType=study-plan-v2&envId=top-sql-50)
+
+Write a solution to find the percentage of the users registered in each contest rounded to **two decimals**.
+
+Return the result table ordered by **percentage in descending order**. In case of a tie, order it by **contest_id in ascending order**.
+
+
+#### 💡 SQL Solution
+
+```sql
+SELECT contest_id, ROUND((count(user_id)*100.0/(select count(*) from Users)), 2) as percentage
+FROM Register
+GROUP BY contest_id
+ORDER BY percentage DESC, contest_id ASC;
+````
+⚡ This solution beats **87.08%** of other submissions' runtime.
 
 ---
 
