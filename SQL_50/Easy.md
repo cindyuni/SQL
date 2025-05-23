@@ -67,6 +67,24 @@ OR population >=  25000000;
 ⚡ This solution beats **60%** of other submissions' runtime.
 
 ---
+#### [620. Not Boring Movies](https://leetcode.com/problems/not-boring-movies/description/?envType=study-plan-v2&envId=top-sql-50)
+ 
+Write a solution to report the movies with an **odd-numbered ID** and a **description that is not "boring"**.
+
+Return the result table ordered by rating in **descending** order.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT id, movie, description, rating
+FROM Cinema 
+WHERE id%2 != 0 AND description != 'boring' 
+ORDER BY rating DESC;
+```
+⚡ This solution beats **74%** of other submissions' runtime.
+
+
+---
 #### [1068. Product Sales Analysis I](https://leetcode.com/problems/product-sales-analysis-i/description/?envType=study-plan-v2&envId=top-sql-50)
  
 Write a solution to report the product_name, year, and price for each sale_id in the Sales table.
@@ -95,6 +113,28 @@ WHERE author_id = viewer_id
 ORDER BY id;
 ````
 ⚡ This solution beats **55%** of other submissions' runtime.
+
+---
+
+#### [1251. Average Selling Price](https://leetcode.com/problems/average-selling-price/description/?envType=study-plan-v2&envId=top-sql-50)
+Write a solution to find the average selling price for each product. average_price should be **rounded to 2 decimal places**. If a product does not have any sold units, its average selling price is assumed to be 0.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT 
+    P.product_id, 
+    ROUND(ISNULL(SUM(US.units * P.price) * 1.0 / ISNULL(SUM(US.units), 0), 0), 2) AS average_price
+FROM 
+    Prices P
+LEFT JOIN 
+    UnitsSold US
+    ON P.product_id = US.product_id
+    AND US.purchase_date BETWEEN P.start_date AND P.end_date
+GROUP BY 
+    P.product_id;
+````
+⚡ This solution beats **97.94%** of other submissions' runtime.
 
 ---
 
