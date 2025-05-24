@@ -392,6 +392,23 @@ WHERE LEN(content) > 15;
 ⚡ This solution beats **64%** of other submissions' runtime.
 
 ---
+
+#### [1729. Find Followers Count](https://leetcode.com/problems/find-followers-count/submissions/1642478268/?envType=study-plan-v2&envId=top-sql-50)
+
+Write a solution that will, for each user, return the number of followers.
+Return the result table ordered by user_id in ascending order.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT user_id, count(follower_id) as followers_count
+FROM Followers
+GROUP BY user_id;
+````
+⚡ This solution beats **64.32%** of other submissions' runtime.
+
+---
+
 #### [1757. Recyclable and Low Fat Products](https://leetcode.com/problems/recyclable-and-low-fat-products/solutions/?envType=study-plan-v2&envId=top-sql-50)
 Write a solution to find the IDs of products that are **both** low fat and recyclable.
 
