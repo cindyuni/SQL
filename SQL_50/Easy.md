@@ -120,6 +120,24 @@ ORDER BY rating DESC;
 
 
 ---
+
+#### [1045. Customers Who Bought All Products](https://leetcode.com/problems/customers-who-bought-all-products/description/?envType=study-plan-v2&envId=top-sql-50)
+ 
+Write a solution to report the customer ids from the Customer table that bought **all the products** in the Product table.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT customer_id
+FROM Customer C
+GROUP BY  customer_id
+HAVING COUNT(DISTINCT(product_key)) = (SELECT COUNT(DISTINCT(product_key)) FROM Product);
+```
+⚡ This solution beats **88.1%** of other submissions' runtime.
+
+
+---
+
 #### [1068. Product Sales Analysis I](https://leetcode.com/problems/product-sales-analysis-i/description/?envType=study-plan-v2&envId=top-sql-50)
  
 Write a solution to report the product_name, year, and price for each sale_id in the Sales table.
@@ -408,6 +426,29 @@ GROUP BY user_id;
 ⚡ This solution beats **64.32%** of other submissions' runtime.
 
 ---
+
+#### [1731. The Number of Employees Which Report to Each Employee](https://leetcode.com/problems/the-number-of-employees-which-report-to-each-employee/description/?envType=study-plan-v2&envId=top-sql-50)
+
+For this problem, we will consider a manager an employee who has at least 1 other employee reporting to them.
+
+Write a solution to report the ids and the names of all managers, the number of employees who report directly to them, and the average age of the reports rounded to the nearest integer.
+
+Return the result table ordered by `employee_id`.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT E1.employee_id, E1.name, count(DISTINCT E2.employee_id) as reports_count, round(avg(E2.age*1.0), 0) as average_age
+FROM Employees E1
+JOIN Employees E2
+ON E1.employee_id = E2.reports_to
+GROUP BY E1.employee_id, E1.name
+ORDER BY E1.employee_id;
+````
+⚡ This solution beats **77.85%** of other submissions' runtime.
+
+---
+
 
 #### [1757. Recyclable and Low Fat Products](https://leetcode.com/problems/recyclable-and-low-fat-products/solutions/?envType=study-plan-v2&envId=top-sql-50)
 Write a solution to find the IDs of products that are **both** low fat and recyclable.
