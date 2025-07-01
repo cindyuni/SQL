@@ -339,7 +339,21 @@ ON E.id = EU.id;
 ⚡ This solution beats **88%** of other submissions' runtime.
 
 ---
+#### [1527. Patients With a Condition](https://leetcode.com/problems/patients-with-a-condition/?envType=study-plan-v2&envId=top-sql-50)
+Write a solution to find the patient_id, patient_name, and conditions of the patients who have Type I Diabetes. Type I Diabetes always starts with `DIAB1` prefix.
 
+Return the result table in any order.
+
+#### 💡 SQL Solution
+
+```sql
+SELECT *
+FROM Patients
+WHERE conditions LIKE 'DIAB1%' OR conditions LIKE '% DIAB1%';
+````
+⚡ This solution beats **85%** of other submissions' runtime.
+
+---
 #### [1581. Customer Who Visited but Did Not Make Any Transactions](https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/description/?envType=study-plan-v2&envId=top-sql-50)
 Write a solution to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.
 
