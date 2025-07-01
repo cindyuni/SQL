@@ -410,7 +410,21 @@ GROUP BY a1.machine_id;
 ⚡ This solution beats **76.97%** of other submissions' runtime.
 
 ---
+#### [1667. Fix Names in a Table](https://leetcode.com/problems/fix-names-in-a-table/?envType=study-plan-v2&envId=top-sql-50)
+Write a solution to fix the names so that only the first character is uppercase and the rest are lowercase.
 
+Return the result table ordered by `user_id`.
+#### 💡 SQL Solution
+
+```sql
+SELECT user_id,
+     UPPER(LEFT(name,1))+LOWER(SUBSTRING(name,2,LEN(name))) AS name
+FROM Users
+ORDER BY user_id;
+````
+⚡ This solution beats **73%** of other submissions' runtime.
+
+---
 #### [1683. Invalid Tweets](https://leetcode.com/problems/invalid-tweets/description/?envType=study-plan-v2&envId=top-sql-50)
 Write a solution to find the IDs of the invalid tweets. The tweet is invalid if the number of characters used in the content of the tweet is **strictly greater** than `15`.
 
