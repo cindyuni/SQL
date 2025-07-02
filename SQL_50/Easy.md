@@ -491,7 +491,31 @@ WHERE low_fats = 'Y' AND recyclable = 'Y';
 ⚡ This solution beats **79%** of other submissions' runtime.
 
 ---
+#### [1789. Primary Department for Each Employee](https://leetcode.com/problems/primary-department-for-each-employee/description/?envType=study-plan-v2&envId=top-sql-50)
+Employees can belong to multiple departments. When the employee joins other departments, they need to decide which department is their primary department. Note that when an employee belongs to only one department, their primary column is 'N'.
 
+Write a solution to report all the employees with their primary department. For employees who belong to one department, report their only department.
+
+Return the result table in any order.
+
+#### 💡 SQL Solution
+
+```sql
+WITH cte as (
+        SELECT employee_id,
+        CASE WHEN primary_flag = 'Y' THEN department_id
+            WHEN COUNT(*) OVER (PARTITION BY employee_id) = 1 THEN department_id
+            ELSE NULL
+        END AS department_id
+    FROM Employee
+)
+SELECT *
+FROM cte
+WHERE department_id is not null
+````
+⚡ This solution beats **93%** of other submissions' runtime.
+
+---
 #### [1978. Employees Whose Manager Left the Company](https://leetcode.com/problems/employees-whose-manager-left-the-company/description/?envType=study-plan-v2&envId=top-sql-50)
 
 Find the IDs of the employees whose salary is strictly **less than $30000** and whose manager left the company. When a manager leaves the company, their information is deleted from the Employees table, but the reports still have their manager_id set to **the manager that left**.
